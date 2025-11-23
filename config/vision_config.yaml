@@ -1,0 +1,47 @@
+# Vision System Configuration
+
+# Object detector settings
+detector:
+  model_type: "yolo"  # Options: yolo, onnx, opencv
+  model_path: null  # Auto-download if null (YOLOv8n)
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+  input_size: [640, 640]
+
+  # Class filter (null = detect all classes)
+  classes: null
+
+# Object tracker settings
+tracker:
+  max_distance: 50  # pixels - max distance for track association
+  max_disappeared: 30  # frames - max frames before removing track
+  min_hits: 3  # minimum detections before confirming track
+
+# Threat detection
+threats:
+  # Classes considered as threats
+  threat_classes:
+    - person
+    - car
+    - truck
+    - bicycle
+    - motorcycle
+
+  # Minimum confidence for threat classification
+  threat_confidence_threshold: 0.6
+
+  # Alert settings
+  alert_enabled: true
+  alert_cooldown: 5.0  # seconds between alerts for same track
+
+# Camera settings
+camera:
+  resolution: [640, 480]
+  fps: 30
+  fov: 60  # degrees
+
+# Performance
+performance:
+  enable_gpu: true
+  max_fps: 30  # Maximum processing FPS
+  downscale_factor: 1.0  # Downscale input for performance

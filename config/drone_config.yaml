@@ -1,0 +1,31 @@
+# Drone Configuration
+
+# Simulation settings
+simulation:
+  use_gui: true
+  timestep: 0.004167  # 1/240 seconds
+  start_position: [0, 0, 0.5]
+
+# Hardware settings (for real drone)
+hardware:
+  connection_string: "udp:127.0.0.1:14550"  # MAVLink connection
+  baud_rate: 57600
+  camera_device: 0  # Camera device ID
+
+# Physical parameters
+physical:
+  mass: 1.5  # kg
+  max_speed: 15.0  # m/s
+  max_altitude: 100.0  # meters
+  battery_capacity: 5000  # mAh
+  battery_cells: 4  # 4S LiPo
+
+# Safety limits
+safety:
+  min_altitude: 2.0  # meters
+  max_altitude: 120.0  # meters (FAA limit)
+  geofence_enabled: true
+  geofence_radius: 500.0  # meters from home
+  low_battery_threshold: 20.0  # percent
+  critical_battery_threshold: 10.0  # percent
+  return_to_home_battery: 25.0  # percent
