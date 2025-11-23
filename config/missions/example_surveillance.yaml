@@ -1,0 +1,39 @@
+# Example Area Surveillance Mission
+
+type: area_surveillance
+
+# Drone configuration reference
+drone:
+  connection_string: "udp:127.0.0.1:14550"
+
+# Vision configuration
+vision:
+  detector:
+    model_type: "yolo"
+    confidence_threshold: 0.5
+  tracker:
+    max_distance: 50
+  threat_classes: ["person", "car"]
+
+# Navigation configuration
+navigation:
+  planner:
+    default_altitude: 15.0
+    default_speed: 5.0
+  controller: {}
+
+# Mission parameters
+params:
+  # Search zone boundary (x, y) in meters
+  zone:
+    - [0, 0]
+    - [80, 0]
+    - [80, 80]
+    - [0, 80]
+
+  altitude: 15.0  # meters
+  speed: 5.0  # m/s
+  pattern: "grid"  # Options: grid, spiral
+  spacing: 10.0  # Grid line spacing in meters
+  threat_detection: true
+  name: "Example Area Surveillance"

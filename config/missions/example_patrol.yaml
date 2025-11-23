@@ -1,0 +1,39 @@
+# Example Perimeter Patrol Mission
+
+type: perimeter_patrol
+
+# Drone configuration reference
+drone:
+  connection_string: "udp:127.0.0.1:14550"
+
+# Vision configuration
+vision:
+  detector:
+    model_type: "yolo"
+    confidence_threshold: 0.5
+  tracker:
+    max_distance: 50
+  threat_classes: ["person"]
+
+# Navigation configuration
+navigation:
+  planner:
+    default_altitude: 10.0
+    default_speed: 5.0
+    waypoint_radius: 1.0
+  controller: {}
+
+# Mission parameters
+params:
+  # Perimeter waypoints (x, y) in meters
+  waypoints:
+    - [0, 0]
+    - [100, 0]
+    - [100, 100]
+    - [0, 100]
+
+  altitude: 10.0  # meters
+  speed: 5.0  # m/s
+  detect_intruders: true
+  num_loops: 2
+  name: "Example Perimeter Patrol"

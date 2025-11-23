@@ -1,0 +1,60 @@
+version: '3.8'
+
+services:
+  # Main simulation environment
+  drone-sim:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: drone-core-sim
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      # Mount source code for development
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+      - ./config:/app/config
+      - ./output:/app/output
+      - ./logs:/app/logs
+      # X11 socket for GUI (Linux)
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    network_mode: host
+    stdin_open: true
+    tty: true
+    command: python scripts/run_sortie.py --mission perimeter_patrol
+
+  # Optional: Jupyter notebook for development
+  notebook:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: drone-core-notebook
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/app
+      - ./notebooks:/app/notebooks
+    command: >
+      jupyter notebook
+      --ip=0.0.0.0
+      --port=8888
+      --no-browser
+      --allow-root
+      --NotebookApp.token=''
+    profiles:
+      - dev
+
+  # Optional: Web-based visualization (future)
+  viz:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: drone-core-viz
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    command: python -m http.server 8000
+    profiles:
+      - viz
